@@ -24,7 +24,9 @@ function Home() {
               />
             </div>
           </form>
-          <button className="btn btn-primary btn-md w-full">Login</button>
+          <a href="/dashboard" className="btn btn-primary btn-md w-full">
+            Login
+          </a>
         </div>
       </div>
     </div>
