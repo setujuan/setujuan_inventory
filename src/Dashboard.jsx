@@ -68,7 +68,7 @@ function Dashboard() {
         </div>
       </div>
 
-      <Navigation />
+      {/* <Navigation /> */}
     </>
   );
 }
