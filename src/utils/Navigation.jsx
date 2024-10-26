@@ -1,15 +1,23 @@
 function Navigation() {
   return (
     <div>
-      <div className="flex max-w-sm w-full justify-between fixed bottom-0 left-1/2 -translate-x-1/2">
+      <div className="flex max-w-sm w-full justify-between fixed bottom-0 left-1/2 -translate-x-1/2 py-4 px-4 border-t bg-white">
         <a href="/dashboard">
           <img className="w-[24px]" src="/icon/home.png" alt="Home" />
         </a>
         <a href="/barang-keluar">
-          <img className="w-[24px]" src="/icon/home.png" alt="Profile" />
+          <img
+            className="w-[24px]"
+            src="/icon/barangKeluarMenu.png"
+            alt="Profile"
+          />
         </a>
         <a href="/barang-masuk">
-          <img className="w-[24px]" src="/icon/home.png" alt="Settings" />
+          <img
+            className="w-[24px]"
+            src="/icon/barangMasukMenu.png"
+            alt="Settings"
+          />
         </a>
       </div>
     </div>

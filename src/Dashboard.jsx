@@ -11,13 +11,13 @@ function Dashboard() {
             </p>
           </div>
           <div className="flex gap-2 mt-4">
-            <a href="/barangKeluar" className="w-full">
+            <a href="/barang-keluar-form" className="w-full">
               <div className="flex flex-col items-center justify-center py-4 border gap-2 ">
                 <p>Barang Keluar</p>
                 <img src="/icon/barangKeluar.png" alt="" className="w-[48px]" />
               </div>
             </a>
-            <a href="/barangMasuk" className="w-full">
+            <a href="/barang-masuk-form" className="w-full">
               <div className="flex flex-col items-center justify-center py-4 border gap-2">
                 <p>Barang Masuk</p>
                 <img src="/icon/barangMasuk.png" alt="" className="w-[48px]" />
@@ -68,7 +68,7 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* <Navigation /> */}
+      <Navigation />
     </>
   );
 }
