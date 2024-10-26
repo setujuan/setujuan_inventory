@@ -14,7 +14,7 @@ function BarangKeluar() {
   return (
     <>
       <div className="bg-gray-300 flex flex-col items-center min-h-screen">
-        <div className="flex flex-col w-full sm:max-w-sm bg-white h-screen pt-8 px-4 overflow-y-auto">
+        <div className="flex flex-col w-full sm:max-w-sm bg-white h-screen pt-8 px-4 overflow-y-auto ">
           <div className="flex flex-col">
             <p className="text-2xl">List Barang Keluar</p>
             <p className="text-lg font-light text-gray-500">
