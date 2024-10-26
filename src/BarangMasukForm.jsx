@@ -1,11 +1,11 @@
 import { redirect, useNavigate } from "react-router-dom";
 
-function BarangKeluarForm() {
+function BarangMasukForm() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
     // Redirect ke halaman /barang-keluar
-    navigate("/barang-keluar");
+    navigate("/barang-masuk");
   };
   const now = new Date();
 
@@ -27,10 +27,10 @@ function BarangKeluarForm() {
     <div className="bg-gray-300 flex flex-col items-center min-h-screen">
       <div className="flex flex-col w-full sm:max-w-sm bg-white h-screen pt-8 px-4 overflow-y-auto">
         <div className="border-b pb-4">
-          <a href="/barang-keluar">Back</a>
+          <a href="/barang-masuk">Back</a>
         </div>
         <div className="flex flex-col mt-4">
-          <p className="text-2xl">Barang Keluar</p>
+          <p className="text-2xl">Barang Masuk</p>
         </div>
         <form action="" className="mt-4">
           <div className="flex flex-col gap-2">
@@ -73,4 +73,4 @@ function BarangKeluarForm() {
   );
 }
 
-export default BarangKeluarForm;
+export default BarangMasukForm;
