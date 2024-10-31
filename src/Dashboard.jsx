@@ -82,19 +82,21 @@ function Dashboard() {
             </p>
           </div>
           <div className="flex gap-2 mt-4">
-            {userRole === "inventory" ||
-              (userRole === "user" && (
-                <a href="/barang-keluar-form" className="w-full">
-                  <div className="flex flex-col items-center justify-center py-4 border gap-2 ">
-                    <p>Barang Keluar</p>
-                    <img
-                      src="/icon/barangKeluar.png"
-                      alt=""
-                      className="w-[48px]"
-                    />
-                  </div>
-                </a>
-              ))}
+            {/* Conditional rendering for "Barang Keluar" */}
+            {userRole === "user" && (
+              <a href="/barang-keluar-form" className="w-full">
+                <div className="flex flex-col items-center justify-center py-4 border gap-2 ">
+                  <p>Barang Keluar</p>
+                  <img
+                    src="/icon/barangKeluar.png"
+                    alt=""
+                    className="w-[48px]"
+                  />
+                </div>
+              </a>
+            )}
+
+            {/* Conditional rendering for "Barang Masuk" */}
             {userRole === "inventory" && (
               <>
                 <a href="/barang-masuk-form" className="w-full">
@@ -102,6 +104,16 @@ function Dashboard() {
                     <p>Barang Masuk</p>
                     <img
                       src="/icon/barangMasuk.png"
+                      alt=""
+                      className="w-[48px]"
+                    />
+                  </div>
+                </a>
+                <a href="/barang-keluar-form" className="w-full">
+                  <div className="flex flex-col items-center justify-center py-4 border gap-2 ">
+                    <p>Barang Keluar</p>
+                    <img
+                      src="/icon/barangKeluar.png"
                       alt=""
                       className="w-[48px]"
                     />

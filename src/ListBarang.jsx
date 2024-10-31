@@ -36,7 +36,7 @@ function ListBarang() {
             <p className="text-lg font-light text-gray-500">
               Ini adalah list barang kita
             </p>
-            <form action="" className="mt-4">
+            {/* <form action="" className="mt-4">
               <label className="input input-bordered flex items-center gap-2">
                 <input type="text" className="grow" placeholder="Search" />
                 <svg
@@ -52,7 +52,7 @@ function ListBarang() {
                   />
                 </svg>
               </label>
-            </form>
+            </form> */}
             {userRole === "inventory" && (
               <a href="/barang-form" className="btn btn-primary mt-4">
                 Input Barang

@@ -28,23 +28,29 @@ function Navigation() {
                 alt="Barang Masuk"
               />
             </a>
-            <a href="/barang">
-              <img className="w-[24px]" src="/icon/barang.png" alt="Barang" />
+            <a href="/barang-keluar">
+              <img
+                className="w-[24px]"
+                src="/icon/barangKeluarMenu.png"
+                alt="Barang Keluar"
+              />
             </a>
           </>
         )}
-        {userRole === "inventory" ||
-          (userRole === "user" && (
-            <>
-              <a href="/barang-keluar">
-                <img
-                  className="w-[24px]"
-                  src="/icon/barangKeluarMenu.png"
-                  alt="Barang Keluar"
-                />
-              </a>
-            </>
-          ))}
+
+        {userRole === "user" && (
+          <a href="/barang-keluar">
+            <img
+              className="w-[24px]"
+              src="/icon/barangKeluarMenu.png"
+              alt="Barang Keluar"
+            />
+          </a>
+        )}
+
+        <a href="/barang">
+          <img className="w-[24px]" src="/icon/barang.png" alt="Barang" />
+        </a>
 
         {/* Render report link only for "inventory" and "manajemen" roles */}
         {(userRole === "inventory" || userRole === "manajemen") && (

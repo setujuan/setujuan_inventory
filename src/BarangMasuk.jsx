@@ -49,7 +49,7 @@ function BarangMasuk() {
               Ini adalah list barang masuk kita
             </p>
           </div>
-          <form action="" className="mt-4">
+          {/* <form action="" className="mt-4">
             <label className="input input-bordered flex items-center gap-2">
               <input type="text" className="grow" placeholder="Search" />
               <svg
@@ -65,7 +65,7 @@ function BarangMasuk() {
                 />
               </svg>
             </label>
-          </form>
+          </form> */}
 
           <a href="/barang-masuk-form" className="btn btn-primary mt-4">
             Input Barang Masuk
