@@ -1,15 +1,44 @@
+import React, { useEffect, useState } from "react";
+import supabase from "./utils/supabaseClient.js";
 import Navigation from "./utils/Navigation";
 function BarangKeluar() {
-  const now = new Date();
+  // const now = new Date();
 
-  // Format tanggal sesuai kebutuhan
-  const day = String(now.getDate()).padStart(2, "0");
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const year = String(now.getFullYear()).slice(-2);
-  const hours = String(now.getHours()).padStart(2, "0");
-  const minutes = String(now.getMinutes()).padStart(2, "0");
+  // // Format tanggal sesuai kebutuhan
+  // const day = String(now.getDate()).padStart(2, "0");
+  // const month = String(now.getMonth() + 1).padStart(2, "0");
+  // const year = String(now.getFullYear()).slice(-2);
+  // const hours = String(now.getHours()).padStart(2, "0");
+  // const minutes = String(now.getMinutes()).padStart(2, "0");
 
-  const formattedDate = `${day}/${month}/${year} - ${hours}.${minutes}`;
+  // const formattedDate = `${day}/${month}/${year} - ${hours}.${minutes}`;
+
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      const { data, error } = await supabase
+        .from("log") // Replace with your actual table name
+        .select(
+          `
+          log_id,
+          barang_id,
+          kuantitas_berubah,
+          tanggal,
+          barang (nama)  // Replace nama_barang with the actual name field in your barang table
+        `
+        )
+        .eq("aksi", "keluar");
+
+      if (error) {
+        console.error("Error fetching items:", error);
+      } else {
+        setItems(data);
+      }
+    };
+
+    fetchItems();
+  });
 
   return (
     <>
@@ -53,34 +82,22 @@ function BarangKeluar() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <div className="flex gap-2 justify-center col-span-2">
-                      <img
-                        src="/img/images.png"
-                        alt=""
-                        className="w-[24px] h-[24px] object-cover"
-                      />
-                      <p>Sirup ABC Squash</p>
-                    </div>
-                  </td>
-                  <td>1</td>
-                  <td>{formattedDate}</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="flex gap-2 justify-center col-span-2">
-                      <img
-                        src="/img/images.png"
-                        alt=""
-                        className="w-[24px] h-[24px] object-cover"
-                      />
-                      <p>Sirup ABC Squash</p>
-                    </div>
-                  </td>
-                  <td>1</td>
-                  <td>{formattedDate}</td>
-                </tr>
+                {items.map((item) => (
+                  <tr key={item.log_id}>
+                    <td>
+                      <div className="flex gap-2 justify-center col-span-2">
+                        {/* <img
+                      src="/img/images.png"
+                      alt=""
+                      className="w-[24px] h-[24px] object-cover"
+                    /> */}
+                        <p>{item.barang.nama}</p>
+                      </div>
+                    </td>
+                    <td>{item.kuantitas_berubah}</td>
+                    <td>{item.tanggal}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
