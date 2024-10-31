@@ -4,6 +4,7 @@ import Navigation from "./utils/Navigation";
 
 function Report() {
   const [barangMasuk, setBarangMasuk] = useState([]);
+  const [barangKeluar, setBarangKeluar] = useState([]);
   const [barang, setBarang] = useState([]);
   const [barangCount, setBarangCount] = useState([]);
   useEffect(() => {
@@ -27,6 +28,26 @@ function Report() {
         setBarangMasuk(data);
       }
     };
+    const fetchBarangKeluar = async () => {
+      const { data, error } = await supabase
+        .from("log") // Replace with your actual table name
+        .select(
+          `
+          log_id,
+          barang_id,
+          kuantitas_berubah,
+          tanggal,
+          barang (nama)  // Replace nama_barang with the actual name field in your barang table
+        `
+        )
+        .eq("aksi", "keluar");
+
+      if (error) {
+        console.error("Error fetching items:", error);
+      } else {
+        setBarangKeluar(data);
+      }
+    };
 
     const fetchBarang = async () => {
       const { data, error } = await supabase.from("barang").select("*");
@@ -41,6 +62,7 @@ function Report() {
 
     fetchBarang();
     fetchBarangMasuk();
+    fetchBarangKeluar();
   });
   return (
     <>
@@ -54,9 +76,6 @@ function Report() {
           <div className="flex flex-col mt-4 py-4 gap-2 border w-full px-4">
             <div className="flex justify-between">
               <p className="">List Barang</p>
-              <a href="stok" className=" underline">
-                Lihat
-              </a>
             </div>
             {barang.slice(0, 5).map((item) => (
               <div className="flex justify-between" key={item.barang_id}>
@@ -69,9 +88,6 @@ function Report() {
           <div className="flex flex-col mt-4 py-4 gap-2 border w-full px-4">
             <div className="flex justify-between">
               <p className="">List Barang Masuk</p>
-              <a href="stok" className=" underline">
-                Lihat
-              </a>
             </div>
 
             {barangMasuk.map((item) => (
@@ -85,11 +101,8 @@ function Report() {
           <div className="flex flex-col mt-4 py-4 gap-2 border w-full px-4">
             <div className="flex justify-between">
               <p className="">List Barang Keluar</p>
-              <a href="stok" className=" underline">
-                Lihat
-              </a>
             </div>
-            {barangMasuk.map((item) => (
+            {barangKeluar.map((item) => (
               <div className="flex justify-between" key={item.log_id}>
                 <p className="">{item.barang.nama}</p>
                 <p className=" font-bold">{item.kuantitas_berubah}</p>

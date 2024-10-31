@@ -2,6 +2,15 @@ import Navigation from "./utils/Navigation";
 import React, { useEffect, useState } from "react";
 import supabase from "./utils/supabaseClient.js";
 function Dashboard() {
+  // Log Out
+  const handleLogout = () => {
+    // Hapus data sesi dari sessionStorage
+    sessionStorage.clear();
+
+    // Redirect ke halaman login (ganti '/login' dengan rute halaman login kamu)
+    window.location.href = "/";
+  };
+
   // total items
   const [items, setItems] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -75,11 +84,19 @@ function Dashboard() {
     <>
       <div className="bg-gray-300 flex flex-col items-center min-h-screen">
         <div className="flex flex-col w-full sm:max-w-sm bg-white h-screen pt-8 px-4 overflow-y-auto pb-24">
-          <div className="flex flex-col">
-            <p className="text-2xl">Hello Nauval</p>
-            <p className="text-lg font-light text-gray-500">
-              Let's complete all the task
-            </p>
+          <div className="flex justify-between items-center">
+            <div className="flex flex-col">
+              <p className="text-2xl">Hello</p>
+              <p className="text-lg font-light text-gray-500">
+                Let's complete all the task
+              </p>
+            </div>
+            <button
+              className="btn btn-primary btn-sm w-fit"
+              onClick={handleLogout}
+            >
+              Log Out
+            </button>
           </div>
           <div className="flex gap-2 mt-4">
             {/* Conditional rendering for "Barang Keluar" */}
