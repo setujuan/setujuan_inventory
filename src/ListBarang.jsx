@@ -7,6 +7,9 @@ import supabase from "./utils/supabaseClient.js";
 function ListBarang() {
   const [barang, setBarang] = useState([]);
   const [userRole, setUserRole] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1); // Halaman saat ini
+  const itemsPerPage = 5; // Jumlah item per halaman
 
   useEffect(() => {
     // Get the user role from session storage
@@ -27,6 +30,19 @@ function ListBarang() {
     fetchBarang();
   }, []);
 
+  // Filter items berdasarkan search query
+  const filteredItems = barang.filter((item) =>
+    item.nama.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Hitung index awal dan akhir item untuk pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Fungsi untuk pindah halaman
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <>
       <div className="bg-gray-300 flex flex-col items-center min-h-screen">
@@ -36,9 +52,16 @@ function ListBarang() {
             <p className="text-lg font-light text-gray-500">
               Ini adalah list barang kita
             </p>
-            {/* <form action="" className="mt-4">
+            {/* Input Search */}
+            <form className="mt-4">
               <label className="input input-bordered flex items-center gap-2">
-                <input type="text" className="grow" placeholder="Search" />
+                <input
+                  type="text"
+                  className="grow"
+                  placeholder="Search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)} // Update state searchQuery
+                />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
@@ -52,7 +75,8 @@ function ListBarang() {
                   />
                 </svg>
               </label>
-            </form> */}
+            </form>
+
             {userRole === "inventory" && (
               <a href="/barang-form" className="btn btn-primary mt-4">
                 Input Barang
@@ -70,7 +94,7 @@ function ListBarang() {
                 </tr>
               </thead>
               <tbody>
-                {barang.map((barang) => (
+                {currentItems.map((barang) => (
                   <tr>
                     <td key={barang.id}>{barang.nama}</td>
                     <td key={barang.id}>{barang.kuantitas}</td>
@@ -92,6 +116,29 @@ function ListBarang() {
                 ))}
               </tbody>
             </table>
+          </div>
+          {/* Pagination Controls */}
+          <div className="flex justify-center mt-4">
+            <div className="join">
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="join-item btn btn-sm"
+              >
+                «
+              </button>
+
+              <button className="join-item btn-sm">Page {currentPage}</button>
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={
+                  currentPage >= Math.ceil(filteredItems.length / itemsPerPage)
+                }
+                className="join-item btn btn-sm"
+              >
+                »
+              </button>
+            </div>
           </div>
         </div>
       </div>

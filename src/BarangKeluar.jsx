@@ -2,18 +2,10 @@ import React, { useEffect, useState } from "react";
 import supabase from "./utils/supabaseClient.js";
 import Navigation from "./utils/Navigation";
 function BarangKeluar() {
-  // const now = new Date();
-
-  // // Format tanggal sesuai kebutuhan
-  // const day = String(now.getDate()).padStart(2, "0");
-  // const month = String(now.getMonth() + 1).padStart(2, "0");
-  // const year = String(now.getFullYear()).slice(-2);
-  // const hours = String(now.getHours()).padStart(2, "0");
-  // const minutes = String(now.getMinutes()).padStart(2, "0");
-
-  // const formattedDate = `${day}/${month}/${year} - ${hours}.${minutes}`;
-
   const [items, setItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1); // Halaman saat ini
+  const itemsPerPage = 5; // Jumlah item per halaman
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -38,7 +30,20 @@ function BarangKeluar() {
     };
 
     fetchItems();
-  });
+  }, []);
+
+  // Filter items berdasarkan search query
+  const filteredItems = items.filter((item) =>
+    item.barang.nama.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Hitung index awal dan akhir item untuk pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Fungsi untuk pindah halaman
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -50,9 +55,16 @@ function BarangKeluar() {
               Ini adalah list barang keluar kita
             </p>
           </div>
-          {/* <form action="" className="mt-4">
+          {/* Input Search */}
+          <form className="mt-4">
             <label className="input input-bordered flex items-center gap-2">
-              <input type="text" className="grow" placeholder="Search" />
+              <input
+                type="text"
+                className="grow"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)} // Update state searchQuery
+              />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -66,7 +78,7 @@ function BarangKeluar() {
                 />
               </svg>
             </label>
-          </form> */}
+          </form>
 
           <a href="/barang-keluar-form" className="btn btn-primary mt-4">
             Input Barang Keluar
@@ -82,7 +94,7 @@ function BarangKeluar() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {currentItems.map((item) => (
                   <tr key={item.log_id}>
                     <td>
                       <div className="flex gap-2 justify-center col-span-2">
@@ -100,6 +112,29 @@ function BarangKeluar() {
                 ))}
               </tbody>
             </table>
+          </div>
+          {/* Pagination Controls */}
+          <div className="flex justify-center mt-4">
+            <div className="join">
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="join-item btn btn-sm"
+              >
+                «
+              </button>
+
+              <button className="join-item btn-sm">Page {currentPage}</button>
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={
+                  currentPage >= Math.ceil(filteredItems.length / itemsPerPage)
+                }
+                className="join-item btn btn-sm"
+              >
+                »
+              </button>
+            </div>
           </div>
         </div>
       </div>
